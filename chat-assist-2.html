@@ -62,7 +62,6 @@
                     `);
                     $('#chatInput').val('');
 
-
                     askCohere(message);
                     
                 }
@@ -75,6 +74,7 @@
             recognition.maxAlternatives = 1;
 
             $('#voiceBtn').click(function() {
+                $('#chatInput').val('');
                 recognition.start();
             });
 
