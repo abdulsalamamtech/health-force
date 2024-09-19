@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask Medical Tips - Wit.ai</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h1>Ask for Medical Tips</h1>
+    <input type="text" id="medicalQuestion" placeholder="Ask a medical question..." style="width: 300px; padding: 10px;">
+    <button id="askBtn" style="padding: 10px;">Ask</button>
+
+    <div id="response" style="margin-top: 20px;"></div>
+
+    <script>
+        $(document).ready(function () {
+            const apiKey = 'c1OBscvZCArHHp03xOUZceAqpwHHJlvFaKia8ZsC';
+            
+            function askCohere(question) {
+                $.ajax({
+                    url: 'https://api.cohere.ai/generate',
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + apiKey,
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        "model": "command-xlarge-nightly",
+                        "prompt": question,
+                        "max_tokens": 100
+                    }),
+                    success: function(response) {
+                        console.log(response);
+                        // alert("Response from Cohere: " + response.text);
+                        $('#response').html("<div style='width: 500px; padding: 10px;'>"+ response.text +"</div>");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Error: " + error);
+                    }
+                });
+            }
+        
+            // Example usage
+            $('#askBtn').click(function() {
+                const question = $('#medicalQuestion').val();
+                askCohere(question);
+            });
+        });
+        
+
+
+
+
+    </script>
+
+</body>
+</html>
